@@ -1,46 +1,43 @@
 # Gestion-Parc-GLPI-OCS
-Projet L3 ETSE - Inventaire automatisé et gestion de parc informatique.
-🚀 Gestion de Parc & Inventaire Automatisé (Projet L3 - ETSE)
-Projet réalisé à l'ISM Dakar par Dylan B.
+**Projet Académique - Licence 3 ETSE**
+**Etablissement : ISM Dakar**
 
-💡 Le pourquoi du projet
-L'idée était de sortir de la gestion manuelle sur Excel qui devient vite ingérable. Avec mes collègues (Oumou et Simon), on a voulu monter une infra capable de scanner tout un parc en temps réel. Le but : savoir exactement ce qui se passe sur chaque machine sans bouger de son siège, tout en centralisant le support technique.
+## Présentation du projet
+L'objectif de ce projet était de remplacer la gestion manuelle de parc informatique par une infrastructure automatisée. En collaboration avec mon groupe (Oumou et Simon), nous avons mis en place une solution capable de recenser l'intégralité des actifs matériels et logiciels en temps réel, tout en centralisant le support technique via une plateforme de ticketing.
 
-🛠️ Ma Stack Technique
-Pour ce lab, j'ai mixé du monde Linux et du monde Windows pour simuler une vraie entreprise :
+## Stack Technique
+L'architecture repose sur une interopérabilité entre environnements Linux et Windows :
+* **Serveur Central :** Ubuntu Server (Stack LAMP : Apache, MariaDB, PHP).
+* **Annuaire :** Windows Server avec Active Directory (intégration LDAP).
+* **Agents :** OCS Inventory installé sur les postes clients Windows.
 
-Serveur Central : Ubuntu Server (Stack LAMP : Apache, MariaDB, PHP).
+---
 
-Annuaire : Windows Server avec Active Directory (pour que les collègues utilisent leur session Windows habituelle).
+## Réalisation Technique
 
-Agents : OCS Inventory installé sur les postes clients.
+### 1. Collecte de données avec OCS Inventory NG
+Le serveur OCS a été configuré pour recevoir les inventaires via le protocole HTTP. L'agent Windows transmet les configurations matérielles (RAM, CPU, BIOS) et logicielles au serveur Ubuntu situé à l'adresse `http://192.168.142.132/ocsinventory`.
 
-🏗️ Ce que j'ai mis en place
-1. La collecte avec OCS Inventory NG
-C'est le "moteur" de recherche. L'agent Windows envoie un fichier XML au serveur Ubuntu avec toute la config (RAM, CPU, logiciels installés). J'ai configuré le serveur pour qu'il écoute sur [http://192.168.142.132/ocsinventory](http://192.168.142.132/ocsinventory).
+### 2. Gestion et Ticketing avec GLPI v11
+Nous avons déployé la version 11 de GLPI pour bénéficier des dernières fonctionnalités de gestion de parc. Cet outil permet de suivre le cycle de vie des équipements et de centraliser les demandes d'assistance.
 
-2. Le pilotage avec GLPI v11
-C'est ici qu'on gère tout. J'ai choisi la v11 pour avoir l'interface la plus moderne. C'est là qu'on suit le cycle de vie du matos et qu'on gère les tickets de maintenance.
+### 3. Authentification Centralisée (LDAP)
+Pour simplifier la gestion des accès, GLPI a été interconnecté avec l'Active Directory. Cela permet une synchronisation des comptes utilisateurs et une authentification unique basée sur les identifiants du domaine Windows.
 
-3. L'authentification LDAP
-Pas question de créer 50 comptes. J'ai relié GLPI à l'Active Directory. Résultat : une seule base d'utilisateurs et une connexion simplifiée.
+---
 
-🚧 Les galères techniques (et comment je m'en suis sorti)
-Le plus gros point de blocage a été le Plugin OCS. La version stable (2.1.7) ne voulait rien savoir avec GLPI 11 (incompatibilité de noyau).
+## Difficultés Techniques et Résolution
+Le point critique du projet a été l'installation du Plugin OCS. La version stable (2.1.7) présentait une incompatibilité majeure avec le noyau de GLPI 11.
 
-Ma solution : Je suis allé chercher la version de développement directement sur le GitHub des développeurs de GLPI.
+**Solution appliquée :**
+Pour résoudre ce blocage, j'ai récupéré la version de développement directement depuis les sources Git du projet :
 
-Bash
-# On nettoie l'ancienne version qui buggait
+```bash
+# Suppression de la version incompatible
 sudo rm -rf /var/www/html/glpi/plugins/ocsinventoryng
 
-# On récupère la version de dev compatible
-sudo git clone https://github.com/pluginsGLPI/ocsinventoryng.git ocsinventoryng
+# Clonage de la branche de développement compatible
+sudo git clone [https://github.com/pluginsGLPI/ocsinventoryng.git](https://github.com/pluginsGLPI/ocsinventoryng.git) ocsinventoryng
 
-# On remet les bons droits pour qu'Apache puisse l'exécuter
+# Attribution des permissions au serveur web Apache
 sudo chown -R www-data:www-data /var/www/html/glpi/plugins/ocsinventoryng
-Ça a été une bonne leçon sur l'importance de vérifier la compatibilité des versions avant de se lancer !
-
-🎯 Résultat final
-Aujourd'hui, tout tourne. On a même configuré un domaine local dylan-oumou-simon.com. C'est super satisfaisant de voir une machine Windows apparaître automatiquement dans l'inventaire GLPI quelques secondes après l'installation de l'agent.
-Cliquez ici pour télécharger le rapport technique complet (PDF) (Rapport_GLPI_Dylan.pdf)
