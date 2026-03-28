@@ -40,4 +40,14 @@ sudo rm -rf /var/www/html/glpi/plugins/ocsinventoryng
 sudo git clone [https://github.com/pluginsGLPI/ocsinventoryng.git](https://github.com/pluginsGLPI/ocsinventoryng.git) ocsinventoryng
 
 # Attribution des permissions au serveur web Apache
+# Attribution des permissions au serveur web Apache
 sudo chown -R www-data:www-data /var/www/html/glpi/plugins/ocsinventoryng
+``` 
+
+Cette étape a nécessité une veille technique approfondie...
+
+## Bilan du Projet
+L'infrastructure est aujourd'hui totalement opérationnelle...
+
+## Document technique
+[Cliquer ici pour télécharger le rapport technique complet (PDF)](Rapport_GLPI_Dylan.pdf)
