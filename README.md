@@ -1,3 +1,4 @@
+Markdown
 # Gestion-Parc-GLPI-OCS
 **Projet Académique - Licence 3 ETSE**
 **Etablissement : ISM Dakar**
@@ -43,7 +44,8 @@ sudo git clone [https://github.com/pluginsGLPI/ocsinventoryng.git](https://githu
 sudo chown -R www-data:www-data /var/www/html/glpi/plugins/ocsinventoryng
 Cette étape a nécessité une veille technique approfondie pour identifier les dépendances nécessaires au bon fonctionnement de la passerelle.
 
-# Bilan du Projet
+Bilan du Projet
 L'infrastructure est aujourd'hui totalement opérationnelle. Nous avons finalisé la configuration avec un domaine local dylan-oumou-simon.com. L'importation des machines depuis OCS vers GLPI est fluide, garantissant une base de données d'inventaire toujours à jour.
+
 Document technique
-#[Cliquer ici pour télécharger le rapport technique complet (PDF)](Rapport_GLPI_Dylan.pdf)
+Cliquer ici pour télécharger le rapport technique complet (PDF)
