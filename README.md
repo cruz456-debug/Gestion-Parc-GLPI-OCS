@@ -43,3 +43,4 @@ sudo chown -R www-data:www-data /var/www/html/glpi/plugins/ocsinventoryng
 
 🎯 Résultat final
 Aujourd'hui, tout tourne. On a même configuré un domaine local dylan-oumou-simon.com. C'est super satisfaisant de voir une machine Windows apparaître automatiquement dans l'inventaire GLPI quelques secondes après l'installation de l'agent.
+Cliquez ici pour télécharger le rapport technique complet (PDF)](Rapport_GLPI_Dylan.pdf)
